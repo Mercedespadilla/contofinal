@@ -84,50 +84,12 @@ public class Consultas extends JFrame{
     private void formulario() {
         codigo = new JTextField();
         Nombre = new JComboBox();
-        Tipo = new JTextField();
-        si = new JRadioButton("si", true);
+        Tipo= new JTextField();
+        si = new JRadioButton("si",true);
         no = new JRadioButton("no");
         resultados = new JTable();
-        buscar = new JButton("Buscar");
-        insertar = new JButton("Insertar");
-        eliminar = new JButton("Eliminar");
-        actualizar = new JButton("Actualizar");
-        limpiar = new JButton("Limpiar");
-        
-        table = new JPanel();
-        Nombre.addItem("FRAM");
-        Nombre.addItem("WIX");
-        Nombre.addItem("Luber Finer");
-        Nombre.addItem("OSK");
-        disponibilidad = new ButtonGroup();
-        disponibilidad.add(si);
-        disponibilidad.add(no);
-        
-        codigo.setBounds(140, 10, ANCHOC, ALTOC);
-        Nombre.setBounds(140, 60, ANCHOC, ALTOC);
-        Tipo.setBounds(140, 100, ANCHOC, ALTOC);
-        si.setBounds(140, 140, 50, ALTOC);
-        no.setBounds(210, 140, 50,  ALTOC);
-        
-        buscar.setBounds(300, 10, ANCHOC, ALTOC);
-        insertar.setBounds(10, 210, ANCHOC, ALTOC);
-        actualizar.setBounds(150, 210, ANCHOC, ALTOC);
-        eliminar.setBounds(300, 210, ANCHOC, ALTOC);
-        limpiar.setBounds(450, 210, ANCHOC, ALTOC);
-        resultados = new JTable();
-        table.setBounds(10, 250, 500, 200);
-        table.add(new JScrollPane(resultados));
+        buscar = new JButton ("Buscar");
         }
-
-   public final void agregarLabels(){
-        lblCodigo=new JLabel("Codigo");
-        lblMarca= new JLabel ("Marca");
-        lblExistencia=new JLabel("Stock en tienda");
-        lblCodigo.setBounds(10, 10, ANCHOC,ALTOC);
-        lblMarca.setBounds(10, 60, ANCHOC,ALTOC);
-        lblStock.setBounds(10, 100, ANCHOC,ALTOC);
-        lblExistencia.setBounds(10, 140, ANCHOC,ALTOC);
-    }
     public void llenarTabla(){
         tm= new DefaultTableModel(){
             public Class <?> getColumnClass(int column){
@@ -144,15 +106,15 @@ public class Consultas extends JFrame{
             }
         };
     tm.addColumn("Codigo");
-    tm.addColumn("Marca");
-    tm.addColumn("Stock");
-    tm.addColumn("Stock en Sucursal");
+    tm.addColumn("nombre");
+    tm.addColumn("tipo");
+    tm.addColumn("tipo en Sucursal");
     
-    FiltroDao fd=new FiltroDao();
-    ArrayList<Filtro> filtros =fd.readAll();
+    ProductosDao fd=new ProductosDao();
+    ArrayList<Productos> filtros =fd.readAll();
     
     filtros.forEach((fi) -> {
-        tm.addRow(new Object []{fi.getCodigo(),fi. getMarca(),fi.getStock(), fi. getExistencia()});
+        tm.addRow(new Object []{fi.getCodigo(),fi. getNombre(),fi.getTipo(), fi. getDisponibiliodad()});
         });
     resultados.setModel(tm);
     }
@@ -160,11 +122,11 @@ public class Consultas extends JFrame{
         insertar.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                FiltroDao fd=new FiltroDao();
-               Filtro f=new Filtro (codigo.getText)(),marca.getSelectedItem().toString(),
+                ProductosDao fd=new ProductosDao();
+               Productos f=new Productos(codigo.getText)(),Nombre.getSelectedItem().toString(),
                     Integer.parseInt(stock.getText()), true);
                if (no.isSelected()){
-                   f.setExistencia(false);
+                   f.setDisponibiliodad(false);
                } 
                if (fd.create(f)){
                JOptionPane.showMessageDialog(null, "Filtro registrado con exito");
@@ -187,7 +149,7 @@ public class Consultas extends JFrame{
                     codigo.setText(f.getCodigo());
                     Nombre.setSelectedItem(f.getNombre());
                     Tipo.setText(Integer.toString(f.getTipo()));
-                    if(f.getDisponibilidad())}{
+                    if(f.getDisponibiliodad())}{
                 si.setSelected(true);
                 }else{
                         no.setSelected(true);
