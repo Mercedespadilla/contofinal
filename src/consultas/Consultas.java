@@ -28,8 +28,8 @@ import productos.Productos;
  */
 public class Consultas extends JFrame{
     public JLabel lblCodigo, lblNombre, lblTipo, lblCantidad, lblPrecio, lblDisponibilidad;
-    public JTextField codigo, descripcion, Nombre;
-    public JComboBox Tipo;
+    public JTextField codigo, descripcion, Tipo;
+    public JComboBox  Nombre;
     ButtonGroup disponibilidad = new ButtonGroup();
     public JRadioButton no;
     public JRadioButton si;
@@ -84,7 +84,7 @@ public class Consultas extends JFrame{
     private void formulario() {
         codigo = new JTextField();
         Nombre = new JComboBox();
-        Tipo= new JTextField();
+        Tipo = new JTextField();
         si = new JRadioButton("si",true);
         no = new JRadioButton("no");
         resultados = new JTable();
@@ -114,48 +114,39 @@ public class Consultas extends JFrame{
     ArrayList<Productos> filtros =fd.readAll();
     
     filtros.forEach((fi) -> {
-        tm.addRow(new Object []{fi.getCodigo(),fi. getNombre(),fi.getTipo(), fi. getDisponibiliodad()});
+        tm.addRow(new Object []{fi.getCodigo(),fi. getNombre(),fi.getTipo(), fi. isDisponibiliodad()});
         });
     resultados.setModel(tm);
     }
     public void eventos (){
-        insertar.addActionListener(new ActionListener(){
+        insertar.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){
-                ProductosDao fd=new ProductosDao();
-               Productos f=new Productos(codigo.getText)(),Nombre.getSelectedItem().toString(),
-                    Integer.parseInt(stock.getText()), true);
-               if (no.isSelected()){
-                   f.setDisponibiliodad(false);
-               } 
-               if (fd.create(f)){
-               JOptionPane.showMessageDialog(null, "Filtro registrado con exito");
-               limpiarCampos();
-               llenarTabla();
-               }else {
-                   JOptionPane.showMessageDialog(null,"Ocurrio un problema al momento de crear el filtro");
-               }
-            }   
-    });
+            public void actionPerformed(ActionEvent e) {
+                ProductosDao fd = new ProductosDao();
+               Productos f = new Productos(codigo.getText(), Nombre.getSelectedItem().toString(),Tipo.getText(),true);                
+                if(no.isSelected()){
+                    f.setDisponibiliodad(false);
+                }
+                if(fd.create(f)){
+                    JOptionPane.showMessageDialog(null, "Filtro registrado con exito");
+                    limpiarCampos();
+                    llenarTabla();
+                }else{
+                    JOptionPane.showMessageDialog(null,"Ocurrio un problema al momento de crear el filtro");
+                }
+            }
+        });
         eliminar.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed (ActionEvent e){
-                ProductosDao fd=new ProductosDao();
-                Productos f= fd.read(codigo.getText());
-                if (f==null){
-                    JOptionPane.showMessageDialog(null, "El filtro buscado no se ha encontrado");
-                    
+            public void actionPerformed(ActionEvent e) {
+                ProductosDao fd = new ProductosDao();
+                if(fd.delete(codigo.getText())){
+                    JOptionPane.showMessageDialog(null, "Filtro eliminado con exito");
+                    limpiarCampos();
+                    llenarTabla();
                 }else{
-                    codigo.setText(f.getCodigo());
-                    Nombre.setSelectedItem(f.getNombre());
-                    Tipo.setText(Integer.toString(f.getTipo()));
-                    if(f.getDisponibiliodad())}{
-                si.setSelected(true);
-                }else{
-                        no.setSelected(true);
-                        
-                        };
-                
+                    JOptionPane.showMessageDialog(null, "Ocurrio un problema al momento de eliminar el filtro");
+                }
             }
         });
         

@@ -10,16 +10,28 @@ package productos;
  * @author LN710Q
  */
 public class Productos {
-    private int codigo;
+    private String codigo;
     private String nombre;
     private String tipo;
     private int cantidad;
     private int precio;
     private boolean disponibiliodad;
+
+    public Productos(String text, String toString, String toString0) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
    
     public Productos(){}
 
-    public Productos(int codigo, String nombre, String tipo, int cantidad, int precio, boolean disponibiliodad) {
+    public Productos(String codigo, String nombre, String tipo, int cantidad, int precio, boolean disponibiliodad) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.tipo = tipo;
@@ -41,13 +53,7 @@ public class Productos {
         this.disponibiliodad = disponibiliodad;
     }
 
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
+    
 
     public String getNombre() {
         return nombre;

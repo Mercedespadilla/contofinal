@@ -31,7 +31,7 @@ public class ProductosDao implements Metodos <Productos>{
         PreparedStatement ps;
         try {
             ps = con.getCnx().prepareStatement(SQL_INSERT);
-            ps.setInt(1, g.getCodigo());
+            ps.setString(1, g.getCodigo());
             ps.setString(2, g.getNombre());
             ps.setString(3, g.getTipo());
             ps.setInt(4, g.getCantidad());
@@ -73,10 +73,10 @@ public class ProductosDao implements Metodos <Productos>{
         try{
             System.out.println(c.getCodigo());
             ps = con.getCnx().prepareStatement(SQL_UPDATE);
-            ps.setInt(1, c.getCodigo());
+            ps.setString(1, c.getCodigo());
             ps.setString(2, c.getNombre());
             ps.setBoolean(3, c.isDisponibiliodad());
-            ps.setInt(4, c.getCodigo());
+            ps.setString(4, c.getCodigo());
             if(ps.executeUpdate()>0){
                 return true;
             }
@@ -100,7 +100,7 @@ public class ProductosDao implements Metodos <Productos>{
             
             rs = ps.executeQuery();
             while(rs.next()){
-               f = new Productos(rs.getInt(1),rs.getString(2),rs.getString(3), rs.getInt(4),rs.getInt(5), rs.getBoolean(6));
+               f = new Productos(rs.getString(1),rs.getString(2),rs.getString(3), rs.getInt(4),rs.getInt(5), rs.getBoolean(6));
             }
             rs.close();
             
@@ -121,7 +121,7 @@ public class ProductosDao implements Metodos <Productos>{
             s = con.getCnx().prepareStatement(SQL_READALL);
             rs = s.executeQuery(SQL_READALL);
             while(rs.next()){
-                all.add(new Productos(rs.getInt(1),rs.getString(2),rs.getString(3), rs.getInt(4),rs.getInt(5), rs.getBoolean(6)));
+                all.add(new Productos(rs.getString(1),rs.getString(2),rs.getString(3), rs.getInt(4),rs.getInt(5), rs.getBoolean(6)));
             }
             rs.close();
         }catch (SQLException ex){
