@@ -5,6 +5,8 @@
  */
 package cortofinal;
 
+import consultas.Consultas;
+
 /**
  *
  * @author LN710Q
@@ -15,7 +17,7 @@ public class Cortofinal {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Consultas gui= new Consultas();
     }
     
 }
