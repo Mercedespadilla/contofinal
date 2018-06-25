@@ -28,7 +28,7 @@ import productos.Productos;
  */
 public class Consultas extends JFrame{
     public JLabel lblCodigo, lblNombre, lblTipo, lblCantidad, lblPrecio, lblDisponibilidad;
-    public JTextField codigo, descripcion, Tipo;
+    public JTextField codigo, descripcion, Tipo,Cantidad;
     public JComboBox  Nombre;
     ButtonGroup disponibilidad = new ButtonGroup();
     public JRadioButton no;
@@ -85,6 +85,7 @@ public class Consultas extends JFrame{
         codigo = new JTextField();
         Nombre = new JComboBox();
         Tipo = new JTextField();
+        Cantidad=new JTextField() ;
         si = new JRadioButton("si",true);
         no = new JRadioButton("no");
         resultados = new JTable();
@@ -123,7 +124,8 @@ public class Consultas extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 ProductosDao fd = new ProductosDao();
-               Productos f = new Productos(codigo.getText(), Nombre.getSelectedItem().toString(),Tipo.getText(),true);                
+               Productos f;                
+                f = new Productos(codigo.getText(), Nombre.getSelectedItem().toString(),Integer.parseInt(Tipo.getText()),Integer.parseInt(Cantidad.getText()),true);
                 if(no.isSelected()){
                     f.setDisponibiliodad(false);
                 }
